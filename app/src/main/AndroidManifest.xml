@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
+    <application
+        android:name=".AuthnApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AndroidAuthn"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.App.Starting">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Settings Activity -->
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:exported="false"
+            android:label="@string/settings"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.AndroidAuthn" />
+
+        <!-- Authorization Code Flow Activity -->
+        <activity
+            android:name=".ui.flows.AuthorizationCodeActivity"
+            android:exported="true"
+            android:label="@string/authorization_code_flow"
+            android:launchMode="singleTask"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.AndroidAuthn">
+
+            <!-- Deep link for OAuth callback -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="com.masstack.authn"
+                    android:host="oauth"
+                    android:path="/callback" />
+            </intent-filter>
+        </activity>
+
+        <!-- WebAuthn Activity -->
+        <activity
+            android:name=".ui.flows.WebAuthnActivity"
+            android:exported="false"
+            android:label="@string/webauthn_flow"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.AndroidAuthn" />
+
+        <!-- CIBA Flow Activity -->
+        <activity
+            android:name=".ui.flows.CibaActivity"
+            android:exported="false"
+            android:label="@string/ciba_flow"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.AndroidAuthn" />
+
+        <!-- Logs Activity -->
+        <activity
+            android:name=".ui.LogsActivity"
+            android:exported="false"
+            android:label="Debug Logs"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.AndroidAuthn" />
+
+        <!-- Server Down Activity -->
+        <activity
+            android:name=".ui.ServerDownActivity"
+            android:exported="false"
+            android:label="Server Unavailable"
+            android:theme="@style/Theme.AndroidAuthn" />
+
+    </application>
+
+</manifest>
